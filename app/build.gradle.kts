@@ -1,14 +1,16 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    kotlin("kapt")
+    alias(libs.plugins.hilt.android)
 }
 
 android {
-    namespace = "com.example.locationpicker"
+    namespace = "com.example.location picker"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.locationpicker"
+        applicationId = "com.example.location picker"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -50,6 +52,20 @@ android {
 }
 
 dependencies {
+    //Room
+    implementation(libs.androidx.room)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.compiler)
+
+    //Map
+    implementation(libs.androidx.compose.googleMap)
+    implementation(libs.androidx.compose.gms)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.compose.material)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.hilt.navigation.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -59,6 +75,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.compose.animation)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -66,4 +83,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(kotlin("script-runtime"))
 }
