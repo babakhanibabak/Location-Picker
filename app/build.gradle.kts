@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.location picker"
+    namespace = "com.example.locationPicker"
     compileSdk = 34
 
     defaultConfig {
