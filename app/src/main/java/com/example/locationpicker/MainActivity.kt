@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
@@ -29,6 +30,9 @@ class MainActivity : ComponentActivity() {
                         text = "Hello World",
                         color = Color.Black
                     )
+                    Column {
+                        Text(text = "Hello World2")
+                    }
                 }
             }
         }
