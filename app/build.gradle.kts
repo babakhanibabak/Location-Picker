@@ -10,8 +10,8 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.location picker"
-        minSdk = 24
+        applicationId = "com.example.locationpicker"
+        minSdk = 25
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -53,9 +53,10 @@ android {
 
 dependencies {
     //Room
-    implementation(libs.androidx.room)
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.compiler)
 
     //Map
     implementation(libs.androidx.compose.googleMap)
@@ -83,5 +84,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(kotlin("script-runtime"))
 }
