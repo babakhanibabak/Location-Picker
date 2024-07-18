@@ -23,13 +23,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             LocationPickerTheme {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(100.dp),
-                        text = "Hello World",
-                        color = Color.Black
-                    )
                     Column {
                         Text(text = "Hello World2")
                         Text(text = "Practice #2")
