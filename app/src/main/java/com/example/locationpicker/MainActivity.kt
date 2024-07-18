@@ -32,6 +32,7 @@ class MainActivity : ComponentActivity() {
                     )
                     Column {
                         Text(text = "Hello World2")
+                        Text(text = "Practice #2")
                     }
                 }
             }
