@@ -13,11 +13,11 @@ class LocationDataProvider @Inject constructor() {
 
 
     private val locationList = listOf(
-        LocationListItemModel(1.0, 1.0),
-        LocationListItemModel(2.0, 2.0),
-        LocationListItemModel(3.0, 3.0),
-        LocationListItemModel(4.0, 4.0),
-        LocationListItemModel(5.0, 5.0),
-        LocationListItemModel(6.0, 6.0),
+        LocationListItemModel("tehran",1.0, 1.0),
+        LocationListItemModel("shiraz",2.0, 2.0),
+        LocationListItemModel("tabriz",3.0, 3.0),
+        LocationListItemModel("karaj",4.0, 4.0),
+        LocationListItemModel("esfahan",5.0, 5.0),
+        LocationListItemModel("kurdestan",6.0, 6.0),
     )
 }
