@@ -72,6 +72,7 @@ fun LocationListScreenContent(
                     ShowData(uiState.locations, onItemClick)
 
                 }
+
             }
 
         }
