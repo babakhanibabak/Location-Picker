@@ -38,7 +38,7 @@ fun LocationListScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    LocationListScreenContent(uiState, onItemClick = onItemClick)
+    LocationListScreenContent(uiState=uiState, onItemClick = onItemClick)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,10 +62,12 @@ fun LocationListScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             when (uiState) {
-                is LocationListScreenState.loading -> { Loading()}
+                is LocationListScreenState.loading -> {
+                    Loading()
+                }
 
                 is LocationListScreenState.error -> {
-                   ShowError(uiState.message)
+                    ShowError(uiState.message)
                 }
 
                 is LocationListScreenState.success -> {
@@ -95,7 +97,7 @@ private fun ShowData(
         contentPadding = PaddingValues(0.dp),
     ) {
         items(locationList) {
-            LocationListItem(model = it, onClick = onItemClick)
+            LocationListItem(model = it, onClick = { model -> onItemClick(model.name) })
         }
     }
 }
