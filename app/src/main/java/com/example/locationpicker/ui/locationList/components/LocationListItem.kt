@@ -2,6 +2,8 @@ package com.example.locationpicker.ui.locationList.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.locationpicker.ui.locationList.model.LocationUiModel
 import com.example.locationpicker.ui.theme.LocationPickerTheme
 
@@ -21,15 +24,29 @@ import com.example.locationpicker.ui.theme.LocationPickerTheme
 fun LocationListItem(
     modifier: Modifier = Modifier,
     model: LocationUiModel,
-    onClick: (String) -> Unit = {}
+    onClick: (LocationUiModel) -> Unit = {}
 ) {
     Card(
         modifier = modifier.padding(8.dp)
             .fillMaxWidth()
             .border(shape = RoundedCornerShape(4.dp), width = 2.dp, color = Color.Black)
-            .clickable { onClick(model.name) },
+            .clickable { onClick(model) },
         ) {
-        Text(modifier = Modifier.padding(8.dp),text = model.name)
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                androidx.wear.compose.material.Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = model.lat.toString(),
+                    fontSize = 30.sp
+                )
+                androidx.wear.compose.material.Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = model.lng.toString(),
+                    fontSize = 30.sp
+                )
+            }
+
+        }
     }
 
 }
