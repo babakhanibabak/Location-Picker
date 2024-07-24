@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Text
+import com.example.locationpicker.ui.locationList.LocationListScreen
 import com.example.locationpicker.ui.theme.LocationPickerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,13 +23,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LocationPickerTheme {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Column {
-                        Text(text = "Hello World2")
-                        Text(text = "Practice #2")
-                        Text(text = "Practice #3")
-                    }
-                }
+                LocationListScreen()
             }
         }
     }
