@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.CircularProgressIndicator
 import androidx.wear.compose.material.Text
 import com.example.locationpicker.ui.locationlist.components.LocationListItem
@@ -39,14 +41,19 @@ fun LocationListScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    LocationListScreenContent(uiState = uiState, onItemClick = onItemClick)
+    LocationListScreenContent(
+        uiState = uiState,
+        onItemClick = onItemClick,
+        onAddLocation = viewModel::insertLocation,
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LocationListScreenContent(
     uiState: LocationListScreenState,
-    onItemClick: (String) -> Unit = {}
+    onItemClick: (String) -> Unit = {},
+    onAddLocation: () -> Unit = {},
 ) {
     Scaffold(modifier = Modifier
         .fillMaxSize()
@@ -64,6 +71,9 @@ fun LocationListScreenContent(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            Button(modifier = Modifier.fillMaxWidth(), onClick = onAddLocation) {
+                Text(text = "Add Location")
+            }
             when (uiState) {
                 is LocationListScreenState.Loading -> {
                     Loading()
@@ -98,7 +108,7 @@ private fun ShowData(
         contentPadding = PaddingValues(0.dp),
     ) {
         items(locationList) {
-            LocationListItem(model = it, onClick = { model -> onItemClick(model.name) })
+            LocationListItem(model = it, onClick = { model -> onItemClick(model.comment) })
         }
     }
 }

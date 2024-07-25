@@ -52,7 +52,12 @@ fun LocationListItem(
 private fun LocationListItemPreview() {
     LocationPickerTheme {
         LocationListItem(
-            model = LocationUiModel("tehran", 1.0, 1.0),
+            model = LocationUiModel(
+                id = 1,
+                lat = 3456.584848,
+                lng = 3456.584848,
+                comment = "My first location",
+            ),
         )
     }
 }

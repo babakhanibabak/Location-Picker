@@ -2,7 +2,9 @@ package com.example.locationpicker.ui.locationlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.locationpicker.domain.model.LocationListItemModel
 import com.example.locationpicker.domain.usecase.GetLocationsUseCase
+import com.example.locationpicker.domain.usecase.InsertLocationUseCase
 import com.example.locationpicker.ui.locationlist.mapper.LocationListUiMapper
 import com.example.locationpicker.ui.locationlist.model.LocationListScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LocationListScreenViewModel @Inject constructor(
     private val uiMapper: LocationListUiMapper,
-    private val useCase: GetLocationsUseCase
+    private val getLocationsUseCase: GetLocationsUseCase,
+    private val insertLocationUseCase: InsertLocationUseCase,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<LocationListScreenState> =
@@ -28,12 +31,31 @@ class LocationListScreenViewModel @Inject constructor(
     private fun loadLocations() {
         viewModelScope.launch {
             runCatching {
-                useCase.execute()
+                getLocationsUseCase.execute()
             }.onFailure {
                 _uiState.value = LocationListScreenState.Error(it.message.toString())
 
             }.onSuccess {
                 _uiState.value = LocationListScreenState.Success(uiMapper.mapToUiModel(it))
+            }
+        }
+    }
+
+    fun insertLocation() {
+        viewModelScope.launch {
+            runCatching {
+                insertLocationUseCase.execute(
+                    location = LocationListItemModel(
+                        id = 1,
+                        lat = 3456.584848,
+                        lng = 3456.584848,
+                        comment = "My first location",
+                    )
+                )
+            }.onFailure {
+                _uiState.value = LocationListScreenState.Error(it.message.toString())
+            }.onSuccess {
+                loadLocations()
             }
         }
     }

@@ -1,7 +1,8 @@
 package com.example.locationpicker.domain.model
 
 data class LocationListItemModel(
-    val name: String,
+    val id: Int,
     val lat: Double,
-    val lng: Double
+    val lng: Double,
+    val comment: String,
 )

@@ -8,9 +8,10 @@ class LocationListUiMapper @Inject constructor() {
     fun mapToUiModel(locationList: List<LocationListItemModel>): List<LocationUiModel> {
         return locationList.map {
             LocationUiModel(
-                name = it.name,
+                id = it.id,
                 lat = it.lat,
-                lng = it.lng
+                lng = it.lng,
+                comment = it.comment,
             )
         }
     }
