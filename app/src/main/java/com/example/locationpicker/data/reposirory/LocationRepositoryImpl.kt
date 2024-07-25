@@ -11,7 +11,6 @@ class LocationRepositoryImpl @Inject constructor(
     private val locationDao: LocationDao,
 ) : LocationRepository {
 
-
     override suspend fun getLocationList(): List<LocationListItemModel> {
         return locationDao.getAllLocations().map { it.toDomainModel() }
     }
