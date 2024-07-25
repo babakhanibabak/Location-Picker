@@ -22,9 +22,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="YOUR_API_KEY" />
         <activity
-            android:name="com.example.locationpicker.MainActivity"
+            android:name="com.example.locationpicker.ui.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.LocationPicker">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.example.locationpicker.ui.locationList.model
+package com.example.locationpicker.ui.locationlist.model
 
 data class LocationUiModel(
     val name: String,

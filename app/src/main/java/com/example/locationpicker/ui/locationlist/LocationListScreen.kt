@@ -1,4 +1,4 @@
-package com.example.locationpicker.ui.locationList
+package com.example.locationpicker.ui.locationlist
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,9 +27,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.CircularProgressIndicator
 import androidx.wear.compose.material.Text
-import com.example.locationpicker.ui.locationList.components.LocationListItem
-import com.example.locationpicker.ui.locationList.model.LocationListScreenState
-import com.example.locationpicker.ui.locationList.model.LocationUiModel
+import com.example.locationpicker.ui.locationlist.components.LocationListItem
+import com.example.locationpicker.ui.locationlist.model.LocationListScreenState
+import com.example.locationpicker.ui.locationlist.model.LocationUiModel
 
 @Composable
 fun LocationListScreen(
@@ -62,15 +62,15 @@ fun LocationListScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             when (uiState) {
-                is LocationListScreenState.loading -> {
+                is LocationListScreenState.Loading -> {
                     Loading()
                 }
 
-                is LocationListScreenState.error -> {
+                is LocationListScreenState.Error -> {
                     ShowError(uiState.message)
                 }
 
-                is LocationListScreenState.success -> {
+                is LocationListScreenState.Success -> {
                     ShowData(uiState.locations, onItemClick)
 
                 }

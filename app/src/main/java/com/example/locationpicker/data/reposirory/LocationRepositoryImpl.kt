@@ -11,5 +11,4 @@ class LocationRepositoryImpl @Inject constructor(
     override suspend fun getLocationList(): List<LocationListItemModel> {
         return locationDataProvider.getLocationList()
     }
-
 }

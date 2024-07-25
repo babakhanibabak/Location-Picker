@@ -11,7 +11,6 @@ class LocationDataProvider @Inject constructor() {
         return locationList
     }
 
-
     private val locationList = listOf(
         LocationListItemModel("tehran",1.0, 1.0),
         LocationListItemModel("shiraz",2.0, 2.0),

@@ -1,7 +1,7 @@
-package com.example.locationpicker.ui.locationList.mapper
+package com.example.locationpicker.ui.locationlist.mapper
 
 import com.example.locationpicker.domain.model.LocationListItemModel
-import com.example.locationpicker.ui.locationList.model.LocationUiModel
+import com.example.locationpicker.ui.locationlist.model.LocationUiModel
 import javax.inject.Inject
 
 class LocationListUiMapper @Inject constructor() {
