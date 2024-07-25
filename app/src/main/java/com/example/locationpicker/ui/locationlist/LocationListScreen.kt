@@ -3,6 +3,7 @@ package com.example.locationpicker.ui.locationlist
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -38,7 +39,7 @@ fun LocationListScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    LocationListScreenContent(uiState=uiState, onItemClick = onItemClick)
+    LocationListScreenContent(uiState = uiState, onItemClick = onItemClick)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,7 +48,9 @@ fun LocationListScreenContent(
     uiState: LocationListScreenState,
     onItemClick: (String) -> Unit = {}
 ) {
-    Scaffold(modifier = Modifier.windowInsetsPadding(androidx.compose.foundation.layout.WindowInsets.statusBars),
+    Scaffold(modifier = Modifier
+        .fillMaxSize()
+        .windowInsetsPadding(WindowInsets.statusBars),
         topBar = {
             TopAppBar(title = { Text(text = "Location List") })
         }
@@ -74,9 +77,7 @@ fun LocationListScreenContent(
                     ShowData(uiState.locations, onItemClick)
 
                 }
-
             }
-
         }
     }
 }
