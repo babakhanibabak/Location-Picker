@@ -3,6 +3,7 @@ package com.example.locationpicker.ui.locationlist
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.BottomAppBarDefaults.windowInsets
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
@@ -30,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.CircularProgressIndicator
 import androidx.wear.compose.material.Text
+import com.example.locationpicker.ui.locationlist.components.BottomBar
 import com.example.locationpicker.ui.locationlist.components.LocationListItem
 import com.example.locationpicker.ui.locationlist.model.LocationListScreenState
 import com.example.locationpicker.ui.locationlist.model.LocationUiModel
@@ -61,6 +65,9 @@ fun LocationListScreenContent(
         topBar = {
             TopAppBar(title = { Text(text = "Location List") })
         }
+        , {
+            BottomBar()
+        }
     ) { padding ->
         Column(
             modifier = Modifier
@@ -88,6 +95,7 @@ fun LocationListScreenContent(
 
                 }
             }
+
         }
     }
 }
