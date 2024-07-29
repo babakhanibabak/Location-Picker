@@ -20,17 +20,21 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.wear.compose.material.ContentAlpha
 import androidx.wear.compose.material.LocalContentAlpha
+import com.example.locationpicker.ui.locationlist.LocationListScreen
 import com.example.locationpicker.ui.theme.LocationPickerTheme
 
 @Composable
-fun NavigationScreen() {
-    NavigationScreenContent()
+fun NavigationScreen(
+    onLocationClick: () -> Unit ={}
+) {
+    NavigationScreenContent(onLocationClick = onLocationClick)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun NavigationScreenContent(
-    onSaveClick: () -> Unit = {}
+    onSaveClick: () -> Unit = {},
+    onLocationClick: () -> Unit = {}
 ) {
     val bottomScrollBehavior = BottomAppBarDefaults.exitAlwaysScrollBehavior()
     Scaffold(modifier = Modifier.fillMaxSize(),
@@ -41,7 +45,7 @@ private fun NavigationScreenContent(
                 scrollBehavior = bottomScrollBehavior
             ) {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
-                    BottomBar()
+                    BottomBar(onLocationClick = onLocationClick)
                 }
 
             }
@@ -64,8 +68,11 @@ private fun NavigationScreenContent(
             NavHost(navController = navController, startDestination = "home") {
                 composable("home") {
                     NavigationScreen(
-
+                        onLocationClick = { navController.navigate("LocationListScreen") }
                     )
+                }
+                composable("LocationListScreen"){
+                    LocationListScreen()
                 }
             }
 
