@@ -22,7 +22,7 @@ fun BottomBar(
     modifier: Modifier = Modifier,
     onMapClick: () -> Unit = {},
     onFavoriteClick: () -> Unit = {},
-    onPointsClick: () -> Unit = {}
+    onLocationClick: () -> Unit = {}
 ) {
     BottomAppBar(
         modifier = modifier,
@@ -35,7 +35,7 @@ fun BottomBar(
         ) {
             MyButtons(modifier=Modifier.weight(0.33f), onClick = onMapClick, text = "Map")
             DividerDefaults()
-            MyButtons( modifier=Modifier.weight(0.33f), onClick = onPointsClick, text = "Points")
+            MyButtons( modifier=Modifier.weight(0.33f), onClick = onLocationClick, text = "Location")
             DividerDefaults()
             MyButtons( modifier=Modifier.weight(0.33f), onClick = onFavoriteClick, text = "Favorites")
         }
