@@ -1,6 +1,8 @@
 package com.example.locationpicker.ui.favorites
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -13,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -48,7 +51,7 @@ fun FavoritesScreenContent(
                 navigationIcon = {
                     IconButton(
                         onClick = onBackClick,
-                        colors = IconButtonDefaults.iconButtonColors(Color.Black)
+                        colors = IconButtonDefaults.iconButtonColors(Color.Red.copy(0.8f))
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -59,7 +62,13 @@ fun FavoritesScreenContent(
                 colors = TopAppBarDefaults.topAppBarColors(Color.Blue.copy(0.5f))
             )
         }) { paddingValues ->
-        Column(modifier = modifier.padding(paddingValues)) {
+        Column(
+            modifier = modifier
+                .padding(paddingValues)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
 
         }
     }
