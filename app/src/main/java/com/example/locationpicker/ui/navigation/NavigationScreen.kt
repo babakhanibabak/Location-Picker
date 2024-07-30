@@ -20,21 +20,25 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.wear.compose.material.ContentAlpha
 import androidx.wear.compose.material.LocalContentAlpha
+import com.example.locationpicker.ui.favorites.FavoritesScreen
 import com.example.locationpicker.ui.locationlist.LocationListScreen
 import com.example.locationpicker.ui.theme.LocationPickerTheme
 
 @Composable
 fun NavigationScreen(
-    onLocationClick: () -> Unit ={}
+    onLocationClick: () -> Unit ={},
+    onFavoriteClick: () -> Unit={}
 ) {
-    NavigationScreenContent(onLocationClick = onLocationClick)
+    NavigationScreenContent(onLocationClick = onLocationClick,
+        onFavoriteClick = onFavoriteClick)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun NavigationScreenContent(
     onSaveClick: () -> Unit = {},
-    onLocationClick: () -> Unit = {}
+    onLocationClick: () -> Unit = {},
+    onFavoriteClick:()-> Unit={}
 ) {
     val bottomScrollBehavior = BottomAppBarDefaults.exitAlwaysScrollBehavior()
     Scaffold(modifier = Modifier.fillMaxSize(),
@@ -45,7 +49,8 @@ private fun NavigationScreenContent(
                 scrollBehavior = bottomScrollBehavior
             ) {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
-                    BottomBar(onLocationClick = onLocationClick)
+                    BottomBar(onLocationClick = onLocationClick,
+                        onFavoriteClick = onFavoriteClick)
                 }
 
             }
@@ -68,11 +73,15 @@ private fun NavigationScreenContent(
             NavHost(navController = navController, startDestination = "home") {
                 composable("home") {
                     NavigationScreen(
-                        onLocationClick = { navController.navigate("LocationListScreen") }
+                        onLocationClick = { navController.navigate("LocationListScreen") },
+                        onFavoriteClick={navController.navigate("FavoriteScreen")}
                     )
                 }
                 composable("LocationListScreen"){
                     LocationListScreen()
+                }
+                composable("FavoriteScreen"){
+                    FavoritesScreen()
                 }
             }
 
