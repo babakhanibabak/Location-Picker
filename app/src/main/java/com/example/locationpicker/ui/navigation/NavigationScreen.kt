@@ -22,15 +22,19 @@ import androidx.wear.compose.material.ContentAlpha
 import androidx.wear.compose.material.LocalContentAlpha
 import com.example.locationpicker.ui.favorites.FavoritesScreen
 import com.example.locationpicker.ui.locationlist.LocationListScreen
+import com.example.locationpicker.ui.map.MapScreen
 import com.example.locationpicker.ui.theme.LocationPickerTheme
 
 @Composable
 fun NavigationScreen(
     onLocationClick: () -> Unit ={},
-    onFavoriteClick: () -> Unit={}
+    onFavoriteClick: () -> Unit={},
+    onMapClick: () -> Unit={}
 ) {
     NavigationScreenContent(onLocationClick = onLocationClick,
-        onFavoriteClick = onFavoriteClick)
+        onFavoriteClick = onFavoriteClick,
+        onMapClick = onMapClick
+        )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,7 +42,8 @@ fun NavigationScreen(
 private fun NavigationScreenContent(
     onSaveClick: () -> Unit = {},
     onLocationClick: () -> Unit = {},
-    onFavoriteClick:()-> Unit={}
+    onFavoriteClick:()-> Unit={},
+    onMapClick: () -> Unit = {}
 ) {
     val bottomScrollBehavior = BottomAppBarDefaults.exitAlwaysScrollBehavior()
     Scaffold(modifier = Modifier.fillMaxSize(),
@@ -50,7 +55,9 @@ private fun NavigationScreenContent(
             ) {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                     BottomBar(onLocationClick = onLocationClick,
-                        onFavoriteClick = onFavoriteClick)
+                        onFavoriteClick = onFavoriteClick,
+                        onMapClick = onMapClick
+                        )
                 }
 
             }
@@ -74,7 +81,8 @@ private fun NavigationScreenContent(
                 composable("home") {
                     NavigationScreen(
                         onLocationClick = { navController.navigate("LocationListScreen") },
-                        onFavoriteClick={navController.navigate("FavoriteScreen")}
+                        onFavoriteClick={navController.navigate("FavoriteScreen")},
+                        onMapClick={navController.navigate("MapScreen")}
                     )
                 }
                 composable("LocationListScreen"){
@@ -82,6 +90,9 @@ private fun NavigationScreenContent(
                 }
                 composable("FavoriteScreen"){
                     FavoritesScreen()
+                }
+                composable("MapScreen"){
+                    MapScreen()
                 }
             }
 
