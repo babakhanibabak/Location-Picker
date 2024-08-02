@@ -63,7 +63,9 @@ fun LocationListItem(
                     fontSize = 30.sp
                 )
             }
-            IconButton(onClick = { isFavorite = !isFavorite }) {
+            IconButton(onClick = { isFavorite = !isFavorite },
+                modifier = Modifier.clickable { onClick(model) }
+            ) {
                 Icon(
                     imageVector = if (isFavorite) Icons.Filled.Favorite
                     else Icons.Outlined.FavoriteBorder,
