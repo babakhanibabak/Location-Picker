@@ -25,9 +25,11 @@ import androidx.wear.compose.material.Text
 import com.example.locationpicker.ui.theme.LocationPickerTheme
 
 @Composable
-fun FavoritesScreen() {
+fun FavoritesScreen(
+    onBackClick: () -> Unit
+) {
     // TODO: Implement favorites screen
-    FavoritesScreenContent()
+    FavoritesScreenContent(onBackClick=onBackClick)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
