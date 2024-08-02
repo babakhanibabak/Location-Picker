@@ -89,7 +89,7 @@ private fun NavigationScreenContent(
                     LocationListScreen()
                 }
                 composable("FavoriteScreen"){
-                    FavoritesScreen()
+                    FavoritesScreen(onBackClick = {navController.navigate("LocationListScreen")})
                 }
                 composable("MapScreen"){
                     MapScreen()
