@@ -4,8 +4,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
 
-data class MapScreenState (
-    val uiSettings: MapUiSettings,
-    val mapProperties: MapProperties,
-    val currentLocation : LatLng
+data class MapScreenState(
+    val uiSettings: MapUiSettings = MapUiSettings(),
+    val mapProperties: MapProperties = MapProperties(),
+    val currentLocation: LatLng = LatLng(0.0, 0.0),
 )

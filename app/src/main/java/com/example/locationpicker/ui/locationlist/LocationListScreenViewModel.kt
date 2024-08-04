@@ -17,7 +17,6 @@ import javax.inject.Inject
 class LocationListScreenViewModel @Inject constructor(
     private val uiMapper: LocationListUiMapper,
     private val getLocationsUseCase: GetLocationsUseCase,
-    private val insertLocationUseCase: InsertLocationUseCase,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<LocationListScreenState> =
@@ -37,25 +36,6 @@ class LocationListScreenViewModel @Inject constructor(
 
             }.onSuccess {
                 _uiState.value = LocationListScreenState.Success(uiMapper.mapToUiModel(it))
-            }
-        }
-    }
-
-    fun insertLocation() {
-        viewModelScope.launch {
-            runCatching {
-                insertLocationUseCase.execute(
-                    location = LocationListItemModel(
-                        id = 1,
-                        lat = 3456.584848,
-                        lng = 3456.584848,
-                        comment = "My first location",
-                    )
-                )
-            }.onFailure {
-                _uiState.value = LocationListScreenState.Error(it.message.toString())
-            }.onSuccess {
-                loadLocations()
             }
         }
     }

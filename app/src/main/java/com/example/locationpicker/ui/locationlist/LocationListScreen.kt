@@ -44,52 +44,30 @@ fun LocationListScreen(
     LocationListScreenContent(
         uiState = uiState,
         onItemClick = onItemClick,
-        onAddLocation = viewModel::insertLocation,
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LocationListScreenContent(
     uiState: LocationListScreenState,
     onItemClick: (String) -> Unit = {},
-    onAddLocation: () -> Unit = {},
 ) {
-    Scaffold(modifier = Modifier
-        .fillMaxSize()
-        .windowInsetsPadding(WindowInsets.statusBars),
-        topBar = {
-            TopAppBar(title = { Text(text = "Location List") })
-        }
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .consumeWindowInsets(padding)
-                .imePadding(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Button(modifier = Modifier.fillMaxWidth(), onClick = onAddLocation) {
-                Text(text = "Add Location")
-            }
-            when (uiState) {
-                is LocationListScreenState.Loading -> {
-                    Loading()
-                }
-
-                is LocationListScreenState.Error -> {
-                    ShowError(uiState.message)
-                }
-
-                is LocationListScreenState.Success -> {
-                    ShowData(uiState.locations, onItemClick)
-
-                }
+    Column(modifier = Modifier.fillMaxSize()) {
+        when (uiState) {
+            is LocationListScreenState.Loading -> {
+                Loading()
             }
 
+            is LocationListScreenState.Error -> {
+                ShowError(uiState.message)
+            }
+
+            is LocationListScreenState.Success -> {
+                ShowData(uiState.locations, onItemClick)
+
+            }
         }
+
     }
 }
 

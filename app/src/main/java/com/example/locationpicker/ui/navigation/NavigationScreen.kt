@@ -58,6 +58,7 @@ private fun NavigationScreenContent() {
                                     selectedItemIndex = index
                                     navController.navigate(item.route) {
                                         popUpTo(navController.graph.findStartDestination().id) {
+                                            inclusive = true
                                             saveState = true
                                         }
                                         launchSingleTop = true
