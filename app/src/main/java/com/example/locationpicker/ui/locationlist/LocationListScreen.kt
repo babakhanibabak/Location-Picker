@@ -30,7 +30,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.CircularProgressIndicator
 import androidx.wear.compose.material.Text
-import com.example.locationpicker.ui.navigation.BottomBar
 import com.example.locationpicker.ui.locationlist.components.LocationListItem
 import com.example.locationpicker.ui.locationlist.model.LocationListScreenState
 import com.example.locationpicker.ui.locationlist.model.LocationUiModel
@@ -61,9 +60,6 @@ fun LocationListScreenContent(
         .windowInsetsPadding(WindowInsets.statusBars),
         topBar = {
             TopAppBar(title = { Text(text = "Location List") })
-        }
-        , {
-            BottomBar()
         }
     ) { padding ->
         Column(
