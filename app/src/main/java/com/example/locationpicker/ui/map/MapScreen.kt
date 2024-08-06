@@ -1,9 +1,14 @@
 package com.example.locationpicker.ui.map
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.FloatingActionButton
@@ -13,6 +18,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -26,6 +34,7 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 
@@ -53,12 +62,23 @@ fun MapScreenContent(
             uiSettings = MapUiSettings(zoomControlsEnabled = true),
             properties = MapProperties(mapType = MapType.SATELLITE)
         ) {
-            Marker (
-                state  = rememberMarkerState( position = uiState.currentLocation),
-                title  = "Marker1" ,
-                snippet  = "Marker in My Location" ,
-                icon  = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)
-            )
+            MarkerInfoWindow(
+                state = rememberMarkerState(position = uiState.currentLocation),
+                icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .border(BorderStroke(1.dp, Color.Black))
+                        .clip(
+                            RoundedCornerShape(10.dp)
+                        )
+                        .background(Color.Blue)
+                        .padding(20.dp)
+                ) {
+                    Text(text = "Title", fontWeight = FontWeight.Bold, color = Color.White)
+                    Text(text = "Description", fontWeight = FontWeight.Medium, color = Color.White)
+                }
+            }
         }
         Button(
             modifier = Modifier
