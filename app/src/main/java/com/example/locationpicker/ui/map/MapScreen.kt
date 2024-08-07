@@ -27,16 +27,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Text
 import com.example.locationpicker.ui.theme.LocationPickerTheme
+import com.google.android.gms.maps.StreetViewPanoramaOptions
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
-import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
+import com.google.maps.android.compose.streetview.StreetView
+import com.google.maps.android.ktx.MapsExperimentalFeature
 
 @Composable
 fun MapScreen(
@@ -47,6 +49,7 @@ fun MapScreen(
     MapScreenContent(uiState, viewModel::onSaveCurrentLocation)
 }
 
+@OptIn(MapsExperimentalFeature::class)
 @Composable
 fun MapScreenContent(
     uiState: MapScreenState,
@@ -79,6 +82,15 @@ fun MapScreenContent(
                     Text(text = "Description", fontWeight = FontWeight.Medium, color = Color.White)
                 }
             }
+            StreetView(
+                streetViewPanoramaOptionsFactory = {
+                    StreetViewPanoramaOptions().position(uiState.currentLocation)
+                },
+                isPanningGesturesEnabled = true,
+                isZoomGesturesEnabled = true,
+                isStreetNamesEnabled = true,
+                isUserNavigationEnabled = true
+            )
         }
         Button(
             modifier = Modifier
