@@ -55,9 +55,11 @@ fun MapScreenContent(
     uiState: MapScreenState,
     onSaveCurrentLocation: () -> Unit = {},
 ) {
+
+
     Box(modifier = Modifier.fillMaxSize()) {
         val cameraPositionState = rememberCameraPositionState {
-            position = CameraPosition.fromLatLngZoom(uiState.currentLocation, 15f)
+            position = CameraPosition.fromLatLngZoom(uiState.currentLocation.latlong(), 15f)
         }
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
@@ -66,7 +68,7 @@ fun MapScreenContent(
             properties = MapProperties(mapType = MapType.SATELLITE)
         ) {
             MarkerInfoWindow(
-                state = rememberMarkerState(position = uiState.currentLocation),
+                state = rememberMarkerState(position = uiState.currentLocation.latlong()),
                 icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)
             ) {
                 Column(
@@ -84,7 +86,7 @@ fun MapScreenContent(
             }
             StreetView(
                 streetViewPanoramaOptionsFactory = {
-                    StreetViewPanoramaOptions().position(uiState.currentLocation)
+                    StreetViewPanoramaOptions().position(uiState.currentLocation. latlong())
                 },
                 isPanningGesturesEnabled = true,
                 isZoomGesturesEnabled = true,
