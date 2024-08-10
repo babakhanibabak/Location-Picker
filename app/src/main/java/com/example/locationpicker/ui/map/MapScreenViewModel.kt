@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.locationpicker.domain.model.LocationListItemModel
 import com.example.locationpicker.domain.usecase.InsertLocationUseCase
+import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,7 @@ class MapScreenViewModel @Inject constructor(
         MapScreenState(
             uiSettings = MapUiSettings(),
             mapProperties = MapProperties(),
-            currentLocation = LandLong(35.2996598, 46.984572)
+            currentLocation = LatLng(35.2996598, 46.984572)
         )
     )
     val uiState by lazy {
@@ -34,8 +35,8 @@ class MapScreenViewModel @Inject constructor(
                 insertLocationUseCase.execute(
                     location = LocationListItemModel(
                         id = 1,
-                        lat = _uiState.value.currentLocation.lat,
-                        lng = _uiState.value.currentLocation.lon,
+                        lat = _uiState.value.currentLocation.latitude,
+                        lng = _uiState.value.currentLocation.longitude,
                         comment = "My first location",
                     )
                 )

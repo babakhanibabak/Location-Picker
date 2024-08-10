@@ -8,15 +8,5 @@ import com.google.maps.android.compose.MapUiSettings
 data class MapScreenState(
     val uiSettings: MapUiSettings = MapUiSettings(zoomControlsEnabled = true),
     val mapProperties: MapProperties = MapProperties(mapType = MapType.SATELLITE),
-    val currentLocation: LandLong = LandLong()
+    val currentLocation: LatLng,
 )
-
-data class LandLong (
-        val lat: Double=0.0,
-        val lon: Double=0.0,
-        ) {
-    fun latlong(): LatLng {
-        return LatLng(lat, lon)
-
-    }
-}

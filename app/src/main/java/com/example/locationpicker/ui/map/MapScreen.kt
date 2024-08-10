@@ -27,9 +27,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Text
 import com.example.locationpicker.ui.theme.LocationPickerTheme
-import com.google.android.gms.maps.StreetViewPanoramaOptions
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
@@ -37,8 +37,6 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
-import com.google.maps.android.compose.streetview.StreetView
-import com.google.maps.android.ktx.MapsExperimentalFeature
 
 @Composable
 fun MapScreen(
@@ -49,17 +47,14 @@ fun MapScreen(
     MapScreenContent(uiState, viewModel::onSaveCurrentLocation)
 }
 
-@OptIn(MapsExperimentalFeature::class)
 @Composable
 fun MapScreenContent(
     uiState: MapScreenState,
     onSaveCurrentLocation: () -> Unit = {},
 ) {
-
-
     Box(modifier = Modifier.fillMaxSize()) {
         val cameraPositionState = rememberCameraPositionState {
-            position = CameraPosition.fromLatLngZoom(uiState.currentLocation.latlong(), 15f)
+            position = CameraPosition.fromLatLngZoom(uiState.currentLocation, 15f)
         }
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
@@ -68,7 +63,7 @@ fun MapScreenContent(
             properties = MapProperties(mapType = MapType.SATELLITE)
         ) {
             MarkerInfoWindow(
-                state = rememberMarkerState(position = uiState.currentLocation.latlong()),
+                state = rememberMarkerState(position = uiState.currentLocation),
                 icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)
             ) {
                 Column(
@@ -84,15 +79,6 @@ fun MapScreenContent(
                     Text(text = "Description", fontWeight = FontWeight.Medium, color = Color.White)
                 }
             }
-            StreetView(
-                streetViewPanoramaOptionsFactory = {
-                    StreetViewPanoramaOptions().position(uiState.currentLocation. latlong())
-                },
-                isPanningGesturesEnabled = true,
-                isZoomGesturesEnabled = true,
-                isStreetNamesEnabled = true,
-                isUserNavigationEnabled = true
-            )
         }
         Button(
             modifier = Modifier
@@ -114,11 +100,14 @@ fun MapScreenContent(
     }
 }
 
-
 @Preview
 @Composable
 private fun MapScreenContentPreview() {
     LocationPickerTheme {
-        MapScreenContent(MapScreenState())
+        MapScreenContent(
+            MapScreenState(
+                currentLocation = LatLng(35.2996598, 46.984572),
+            )
+        )
     }
 }
