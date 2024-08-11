@@ -49,22 +49,23 @@ fun LocationListItem(
         ) {
             Column(
                 modifier = Modifier
+                    .padding(8.dp)
                     .fillMaxWidth()
                     .weight(0.9f)
             ) {
                 androidx.wear.compose.material.Text(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
                     text = model.lat.toString(),
                     fontSize = 30.sp
                 )
                 androidx.wear.compose.material.Text(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
                     text = model.lng.toString(),
                     fontSize = 30.sp
                 )
             }
             IconButton(onClick = { isFavorite = !isFavorite },
-                modifier = Modifier.clickable { onClick(model) }
+                modifier = Modifier.padding(end = 8.dp).clickable { onClick(model) }
             ) {
                 Icon(
                     imageVector = if (isFavorite) Icons.Filled.Favorite
