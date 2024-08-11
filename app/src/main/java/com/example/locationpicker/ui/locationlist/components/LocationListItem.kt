@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -37,7 +38,8 @@ fun LocationListItem(
         modifier = modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .border(shape = RoundedCornerShape(4.dp), width = 2.dp, color = Color.Black)
+            .border(shape = RoundedCornerShape(topStart = 50.dp, bottomEnd = 50.dp),
+                width = 2.dp, color = Color.Black)
             .clickable { onClick(model) },
     ) {
         var isFavorite by remember {
@@ -68,8 +70,10 @@ fun LocationListItem(
                 modifier = Modifier.padding(end = 8.dp).clickable { onClick(model) }
             ) {
                 Icon(
+                    modifier = Modifier.size(40.dp),
                     imageVector = if (isFavorite) Icons.Filled.Favorite
                     else Icons.Outlined.FavoriteBorder,
+                    tint = Color.Blue,
                     contentDescription = ""
                 )
             }
