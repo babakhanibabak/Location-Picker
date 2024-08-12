@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -38,9 +39,17 @@ fun LocationListItem(
         modifier = modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .border(shape = RoundedCornerShape(topStart = 50.dp, bottomEnd = 50.dp),
-                width = 2.dp, color = Color.Black)
+            .border(
+                shape = RoundedCornerShape(topStart = 50.dp, bottomEnd = 50.dp),
+                width = 2.dp, color = Color.Magenta
+            )
             .clickable { onClick(model) },
+        colors = CardColors(
+            containerColor = Color.Cyan,
+            contentColor = Color.Black,
+            disabledContentColor = Color.Black,
+            disabledContainerColor = Color.Magenta
+        )
     ) {
         var isFavorite by remember {
             mutableStateOf(false)
@@ -56,18 +65,24 @@ fun LocationListItem(
                     .weight(0.9f)
             ) {
                 androidx.wear.compose.material.Text(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     text = model.lat.toString(),
                     fontSize = 30.sp
                 )
                 androidx.wear.compose.material.Text(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     text = model.lng.toString(),
                     fontSize = 30.sp
                 )
             }
             IconButton(onClick = { isFavorite = !isFavorite },
-                modifier = Modifier.padding(end = 8.dp).clickable { onClick(model) }
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .clickable { onClick(model) }
             ) {
                 Icon(
                     modifier = Modifier.size(40.dp),
