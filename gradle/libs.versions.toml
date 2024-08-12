@@ -17,6 +17,7 @@ composeMaterial = "1.3.1"
 googleMap = "4.3.3"
 gms = "19.0.0"
 playServicesLocation = "21.3.0"
+accompanistpermissions="0.35.0-alpha"
 
 
 [libraries]
@@ -45,6 +46,7 @@ androidx-compose-material = { group = "androidx.wear.compose", name = "compose-m
 androidx-compose-googleMap = { group = "com.google.maps.android", name = "maps-compose", version.ref = "googleMap" }
 androidx-compose-gms = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "gms" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+accompanist-permissions={group="com.google.accompanist",name="accompanist-permissions",version.ref="accompanistpermissions"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
