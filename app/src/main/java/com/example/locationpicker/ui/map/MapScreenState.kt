@@ -9,5 +9,6 @@ data class MapScreenState(
     val uiSettings: MapUiSettings = MapUiSettings(zoomControlsEnabled = true),
     val mapProperties: MapProperties = MapProperties(mapType = MapType.SATELLITE),
     val currentLocation: LatLng,
+    val isLocationLoading: Boolean = false,
     val showDialog: Boolean = false,
 )

@@ -23,11 +23,16 @@ class MapScreenViewModel @Inject constructor(
         MapScreenState(
             uiSettings = MapUiSettings(),
             mapProperties = MapProperties(),
-            currentLocation = LatLng(35.2996598, 46.984572)
+            currentLocation = LatLng(35.3095143, 47.0278781)
         )
     )
+
     val uiState by lazy {
         _uiState.asStateFlow()
+    }
+
+    fun setOnLocationLoading(isLoading: Boolean) {
+        _uiState.update { it.copy(isLocationLoading = isLoading) }
     }
 
     fun onSaveCurrentLocation() {
@@ -41,6 +46,7 @@ class MapScreenViewModel @Inject constructor(
                         comment = "My first location",
                     )
                 )
+                toggleShowDialog(show = false)
             }
         }
     }
@@ -49,7 +55,7 @@ class MapScreenViewModel @Inject constructor(
         _uiState.update { it.copy(showDialog = show) }
     }
 
-    fun onCurrentLocation(latLng: LatLng) {
+    fun onCurrentLocationUpdate(latLng: LatLng) {
         _uiState.update { it.copy(currentLocation = latLng) }
     }
 }
