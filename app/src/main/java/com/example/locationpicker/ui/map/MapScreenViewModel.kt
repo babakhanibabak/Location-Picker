@@ -48,4 +48,8 @@ class MapScreenViewModel @Inject constructor(
     fun toggleShowDialog(show: Boolean) {
         _uiState.update { it.copy(showDialog = show) }
     }
+
+    fun onCurrentLocation(latLng: LatLng) {
+        _uiState.update { it.copy(currentLocation = latLng) }
+    }
 }

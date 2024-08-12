@@ -1,5 +1,8 @@
 package com.example.locationpicker.ui.map
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.PackageManager
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,18 +28,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.core.app.ActivityCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Text
 import com.example.locationpicker.ui.theme.LocationPickerTheme
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
@@ -51,7 +59,10 @@ fun MapScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    MapScreenContent(uiState, viewModel::toggleShowDialog)
+    MapScreenContent(uiState,
+        viewModel::toggleShowDialog,
+
+    )
 }
 
 @Composable
@@ -100,7 +111,7 @@ fun MapScreenContent(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(16.dp),
-            onClick = { /*TODO*/ }
+            onClick = {  }
         ) {
             Icon(imageVector = Icons.Default.LocationOn, contentDescription = null)
         }
@@ -141,6 +152,42 @@ fun MapScreenContent(
             }
         }
     }
+}
+
+@SuppressLint("MissingPermission")
+@Composable
+fun GetCurrentLocation(
+    onGetCurrentLocationSuccess:(Pair<Double,Double>)->Unit,
+    onGetCurrentLocationFailed: (Exception) -> Unit,
+   priority:Boolean=true
+) {
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    //fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(this)
+    val accuracy = if (priority) {Priority.PRIORITY_HIGH_ACCURACY}
+    else {Priority.PRIORITY_BALANCED_POWER_ACCURACY}
+    if (areLocationPermissionsGranted(LocalContext.current)) {
+        fusedLocationProviderClient.getCurrentLocation(
+            accuracy, CancellationTokenSource().token,
+        ).addOnSuccessListener { location ->
+            location?.let {
+                // If location is not null, invoke the success callback with latitude and longitude
+                onGetCurrentLocationSuccess(Pair(it.latitude, it.longitude))
+            }
+        }.addOnFailureListener { exception ->
+            // If an error occurs, invoke the failure callback with the exception
+            onGetCurrentLocationFailed(exception)
+        }
+    }
+}
+
+@Composable
+private fun areLocationPermissionsGranted(context: Context): Boolean {
+    return (ActivityCompat.checkSelfPermission(
+        context, android.Manifest.permission.ACCESS_FINE_LOCATION
+    ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                context, android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED)
 }
 
 @Preview
