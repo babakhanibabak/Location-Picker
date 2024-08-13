@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.locationpicker.data.datasource.database.entity.LocationEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -23,6 +24,12 @@ interface LocationDao {
 
     @Query(DELETE_LOCATION)
     suspend fun deleteLocation(id: Int)
+
+    @Query("SELECT * FROM location WHERE isFavorite = 1")
+    suspend fun getFavoriteLocations(): List<LocationEntity>
+
+    @Update
+    fun updateLocation(location: LocationEntity)
 
     companion object {
         private const val SELECT_ALL = "SELECT * FROM location"
