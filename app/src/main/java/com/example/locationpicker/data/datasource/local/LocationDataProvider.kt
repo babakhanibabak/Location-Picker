@@ -6,12 +6,18 @@ import javax.inject.Inject
 
 class LocationDataProvider @Inject constructor() {
 
-    suspend fun getLocationList(): List<LocationListItemModel>{
+    suspend fun getLocationList(): List<LocationListItemModel> {
         delay(1000)
         return locationList
     }
 
     private val locationList = listOf(
-        LocationListItemModel(id = 1, lat = 3456.584848, lng = 3456.584848, comment = "My first location"),
+        LocationListItemModel(
+            id = 1,
+            lat = 3456.584848,
+            lng = 3456.584848,
+            comment = "My first location",
+            isFavorite = false
+        ),
     )
 }

@@ -11,6 +11,7 @@ data class LocationEntity(
     val lat: Double,
     val lng: Double,
     val comment: String,
+    val isFavorite: Boolean = false,
 )
 
 fun LocationEntity.toDomainModel() = LocationListItemModel(
@@ -18,4 +19,5 @@ fun LocationEntity.toDomainModel() = LocationListItemModel(
     lat = lat,
     lng = lng,
     comment = comment,
+    isFavorite = isFavorite
 )
