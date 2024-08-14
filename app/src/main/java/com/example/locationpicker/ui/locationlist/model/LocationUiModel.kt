@@ -5,4 +5,5 @@ data class LocationUiModel(
     val lat: Double,
     val lng: Double,
     val comment: String,
+    val isFavorite: Boolean
 )

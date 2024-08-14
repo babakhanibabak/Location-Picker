@@ -44,6 +44,7 @@ class MapScreenViewModel @Inject constructor(
                         lat = _uiState.value.currentLocation.latitude,
                         lng = _uiState.value.currentLocation.longitude,
                         comment = "My first location",
+                        isFavorite = false
                     )
                 )
                 toggleShowDialog(show = false)

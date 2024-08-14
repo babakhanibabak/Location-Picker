@@ -20,6 +20,7 @@ class LocationRepositoryImpl @Inject constructor(
             lat = location.lat,
             lng = location.lng,
             comment = location.comment,
+            isFavorite = location.isFavorite
         )
         locationDao.insertLocations(listOf(entity))
     }
