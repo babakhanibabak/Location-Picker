@@ -64,6 +64,9 @@ dependencies {
     implementation(libs.androidx.compose.googleMap)
     implementation(libs.androidx.compose.gms)
 
+    //copy
+    implementation(libs.kotlin.stdlib)
+
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
