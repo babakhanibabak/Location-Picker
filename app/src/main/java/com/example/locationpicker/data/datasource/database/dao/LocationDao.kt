@@ -20,13 +20,13 @@ interface LocationDao {
     fun getAllLocationsFlow(): Flow<LocationEntity>
 
     @Query(SELECT_ALL)
-    suspend fun getAllLocations(): List<LocationEntity>
+     fun getAllLocations(): List<LocationEntity>
 
     @Query(DELETE_LOCATION)
     suspend fun deleteLocation(id: Int)
 
     @Query("SELECT * FROM location WHERE isFavorite = 1")
-    suspend fun getFavoriteLocations(): List<LocationEntity>
+    fun getFavoriteLocations(): List<LocationEntity>
 
     @Update
     fun updateLocation(location: LocationEntity)

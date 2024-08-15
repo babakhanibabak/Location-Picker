@@ -12,6 +12,7 @@ class LocationListUiMapper @Inject constructor() {
                 lat = it.lat,
                 lng = it.lng,
                 comment = it.comment,
+                isFavorite = it.isFavorite
             )
         }
     }
