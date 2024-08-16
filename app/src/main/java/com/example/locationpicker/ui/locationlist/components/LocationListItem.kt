@@ -19,13 +19,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.locationpicker.data.datasource.database.entity.LocationEntity
 import com.example.locationpicker.ui.locationlist.model.LocationUiModel
 import com.example.locationpicker.ui.theme.LocationPickerTheme
 
@@ -34,7 +35,10 @@ fun LocationListItem(
     modifier: Modifier = Modifier,
     model: LocationUiModel,
     onClick: (LocationUiModel) -> Unit = {},
+    onIconClick: (LocationUiModel) -> Unit = {},
+    navController: NavController? =null
 ) {
+
     Card(
         modifier = modifier
             .padding(8.dp)
@@ -51,7 +55,7 @@ fun LocationListItem(
             disabledContainerColor = Color.Magenta
         )
     ) {
-        var isFavorite by remember {
+        val isFavorite by remember {
             mutableStateOf(false)
         }
         Row(
@@ -79,13 +83,12 @@ fun LocationListItem(
                     fontSize = 30.sp
                 )
             }
-            IconButton(onClick = { isFavorite = !isFavorite },
+            IconButton(onClick = {onIconClick(model) },
                 modifier = Modifier
                     .padding(end = 8.dp)
-                    .clickable { onClick(model) }
             ) {
                 Icon(
-                    modifier = Modifier.size(40.dp),
+                    modifier = Modifier.size(40.dp).clickable { navController?.navigate("favorites") },
                     imageVector = if (isFavorite) Icons.Filled.Favorite
                     else Icons.Outlined.FavoriteBorder,
                     tint = Color.Blue,
@@ -106,6 +109,7 @@ private fun LocationListItemPreview() {
                 lat = 3456.584848,
                 lng = 3456.584848,
                 comment = "My first location",
+                isFavorite = false,
             ),
         )
     }
