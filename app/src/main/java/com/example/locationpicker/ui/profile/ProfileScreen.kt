@@ -14,7 +14,17 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Blue
+import androidx.compose.ui.graphics.Color.Companion.Cyan
+import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -28,24 +38,37 @@ fun ProfileScreen() {
     NavigationRail {
         ExtendedFab()
     }
-  Column(modifier = Modifier.fillMaxSize(),
-      verticalArrangement = Arrangement.Center,
-      horizontalAlignment = Alignment.CenterHorizontally) {
-
-
-      Text(
-            text = "Profile Screen",
-            color = Color.Black,
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        val gradientColors = listOf(Cyan, Blue.copy(alpha = 0.5f), Red.copy(alpha = 0.5f))
+        val offset = Offset(5f, 5f)
+        Text(
+            text = buildAnnotatedString {
+                append("Profile")
+                withStyle(style = SpanStyle(brush = Brush.linearGradient(colors = gradientColors))) {}
+                append("Screen")
+            },
+            color = Color.LightGray,
+            style = TextStyle(
+                brush = Brush.linearGradient(colors = gradientColors),
+                shadow = Shadow(
+                    offset = offset,
+                    blurRadius = 3f
+                )
+            ),
         )
-      Spacer(modifier = Modifier.size(10.dp))
+        Spacer(modifier = Modifier.size(10.dp))
         CircleImage(imageId = R.drawable.images, size = DpSize(100.dp, 100.dp))
-      Spacer(modifier = Modifier.size(10.dp))
-        Text(text = "Place name" ,color = Color.Black)
+        Spacer(modifier = Modifier.size(10.dp))
+        Text(text = "Place name", color = Color.Black)
     }
 }
 
 @Composable
-fun ExtendedFab(modifier: Modifier=Modifier) {
+fun ExtendedFab(modifier: Modifier = Modifier) {
     ExtendedFloatingActionButton(
         onClick = { /*TODO*/ },
         shape = RoundedCornerShape(8.dp),
