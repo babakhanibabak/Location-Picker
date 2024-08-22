@@ -8,10 +8,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -28,6 +36,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.room.util.TableInfo
 import androidx.wear.compose.material.Text
 import com.example.locationPicker.R
 import com.example.locationpicker.ui.locationlist.components.CircleImage
@@ -35,9 +44,9 @@ import com.example.locationpicker.ui.theme.LocationPickerTheme
 
 @Composable
 fun ProfileScreen() {
-    NavigationRail {
-        ExtendedFab()
-    }
+
+    ExtendedFab()
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -69,18 +78,41 @@ fun ProfileScreen() {
 
 @Composable
 fun ExtendedFab(modifier: Modifier = Modifier) {
-    ExtendedFloatingActionButton(
-        onClick = { /*TODO*/ },
-        shape = RoundedCornerShape(8.dp),
-        containerColor = Color.Blue,
-        contentColor = Color.White,
-        modifier = modifier,
-        content = {
-            Icon(imageVector = Icons.Default.Edit, contentDescription = "")
-            Text(text = "Compose")
+        var selectedItem by remember { mutableStateOf(0) }
+        val items = listOf("Home", "Search", "Settings")
+        val icons = listOf(Icons.Filled.Home, Icons.Filled.Search, Icons.Filled.Settings)
+
+        Column {
+            NavigationRail(
+                containerColor = Color.Gray,
+                contentColor = Color.White,
+                modifier = Modifier.weight(1f)
+            ) {
+                items.forEachIndexed { index, item ->
+                    NavigationRailItem(
+                        icon = { Icon(icons[index], contentDescription = item) },
+                        label = { Text(item) },
+                        selected = selectedItem == index,
+                        onClick = {
+                            selectedItem = index
+                        }
+                    )
+                }
+            }
+
+            ExtendedFloatingActionButton(
+                onClick = { /*TODO*/ },
+                shape = RoundedCornerShape(8.dp),
+                containerColor = Blue,
+                contentColor = Color.White,
+                modifier = modifier,
+                content = {
+                    Icon(imageVector = Icons.Default.Edit, contentDescription = "")
+                    Spacer(modifier = Modifier.size(8.dp))
+                    Text(text = "Compose")
+                })
         }
-    )
-}
+        }
 
 
 @Preview
