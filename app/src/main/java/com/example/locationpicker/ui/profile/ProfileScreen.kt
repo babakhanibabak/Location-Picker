@@ -12,7 +12,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
@@ -34,7 +33,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -76,7 +74,7 @@ fun ProfileScreen() {
                 Row(modifier = Modifier.fillMaxWidth()) {
                     androidx.compose.material3.Text(
                         text = "Drawer Title",
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier.padding(8.dp),
                         textAlign = TextAlign.Center
                     )
                 }
@@ -91,66 +89,73 @@ fun ProfileScreen() {
         },
         gesturesEnabled = true
     )
-    {Scaffold(
-        topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(Color.LightGray),
-                title = { Text(text = "Profile",
-                textAlign = TextAlign.Center) },
-                actions = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            drawerState.apply {
-                                if (isClosed) open() else close()
-                            }
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.Menu, contentDescription = ""
+    {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    modifier = Modifier,
+                    colors = TopAppBarDefaults.topAppBarColors(Color.LightGray),
+                    title = {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = "Profile",
+                            textAlign = TextAlign.Center
                         )
-                    }
-            })
-        }
-    ) { paddingValues ->
+                    },
+                    actions = {
+                        IconButton(onClick = {
+                            scope.launch {
+                                drawerState.apply {
+                                    if (isClosed) open() else close()
+                                }
+                            }
+                        }) {
+                            Icon(
+                                imageVector = Icons.Filled.Menu, contentDescription = ""
+                            )
+                        }
+                    })
+            }
+        ) { paddingValues ->
 
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            val gradientColors = listOf(Cyan, Blue.copy(alpha = 0.5f), Red.copy(alpha = 0.5f))
-            val offset = Offset(5f, 5f)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                val gradientColors = listOf(Cyan, Blue.copy(alpha = 0.5f), Red.copy(alpha = 0.5f))
+                val offset = Offset(5f, 5f)
 
-            Text(
-                text = buildAnnotatedString {
-                    append("Profile")
-                    withStyle(style = SpanStyle(brush = Brush.linearGradient(colors = gradientColors))) {}
-                    append("Screen")
-                },
-                color = Color.LightGray,
-                style = TextStyle(
-                    brush = Brush.linearGradient(colors = gradientColors),
-                    shadow = Shadow(
-                        offset = offset,
-                        blurRadius = 3f
-                    )
-                ),
-            )
-            Spacer(modifier = Modifier.size(10.dp))
-            CircleImage(imageId = R.drawable.images, size = DpSize(100.dp, 100.dp))
-            Spacer(modifier = Modifier.size(10.dp))
-            Text(text = "Place name", color = Color.Black)
+                Text(
+                    text = buildAnnotatedString {
+                        append("Profile")
+                        withStyle(style = SpanStyle(brush = Brush.linearGradient(colors = gradientColors))) {}
+                        append("Screen")
+                    },
+                    color = Color.LightGray,
+                    style = TextStyle(
+                        brush = Brush.linearGradient(colors = gradientColors),
+                        shadow = Shadow(
+                            offset = offset,
+                            blurRadius = 3f
+                        )
+                    ),
+                )
+                Spacer(modifier = Modifier.size(10.dp))
+                CircleImage(imageId = R.drawable.images, size = DpSize(100.dp, 100.dp))
+                Spacer(modifier = Modifier.size(10.dp))
+                Text(text = "Place name", color = Color.Black)
+            }
         }
     }
-}
 }
 
 @Composable
 fun ExtendedFab(modifier: Modifier = Modifier) {
-    var selectedItem by remember { mutableStateOf(0) }
+    var selectedItem by remember { androidx.compose.runtime.mutableIntStateOf(0) }
     val items = listOf("Home", "Search", "Settings")
     val icons = listOf(Icons.Filled.Home, Icons.Filled.Search, Icons.Filled.Settings)
 
