@@ -69,67 +69,105 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen() {
-//    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-//    val scope = rememberCoroutineScope()
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    val items = listOf(Icons.Default.Home,Icons.Filled.Search, Icons.Filled.Settings)
+    val selectedItem = remember { mutableStateOf(items[0]) }
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet(modifier = Modifier) {
 
-
-//    ModalNavigationDrawer(
-//        drawerState = drawerState,
-//        drawerContent = {
-//            ModalDrawerSheet(modifier = Modifier) {
-//
-//                Row(modifier = Modifier.fillMaxWidth()) {
-//                    androidx.compose.material3.Text(
-//                        text = "Drawer Title",
-//                        modifier = Modifier.padding(8.dp),
-//                        textAlign = TextAlign.Center
-//                    )
-//                }
-//
-//                HorizontalDivider()
-//                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-//                    ExtendedFab()
-//                }
-//
-//
-//            }
-//        },
-//        gesturesEnabled = true
-//    )
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                modifier = Modifier,
-                colors = TopAppBarDefaults.topAppBarColors(Color.LightGray),
-                title = {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = "Profile",
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    androidx.compose.material3.Text(
+                        text = "Drawer Title",
+                        modifier = Modifier.padding(8.dp),
                         textAlign = TextAlign.Center
                     )
-                },
-//                    actions = {
-//                        IconButton(onClick = {
-//                            scope.launch {
-//                                drawerState.apply {
-//                                    if (isClosed) open() else close()
-//                                }
-//                            }
-//                        }) {
-//                            Icon(
-//                                imageVector = Icons.Filled.Menu, contentDescription = ""
-//                            )
-//                        }
-//                    }
-            )
+                }
+
+                HorizontalDivider()
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    items.forEach { item ->
+                        NavigationDrawerItem(
+                            modifier = Modifier.padding(horizontal = 12.dp),
+                            icon = { Icon(item, contentDescription = null) },
+                            label = { Text(item.name.substringAfterLast(".")) },
+                            selected = item == selectedItem.value,
+                            onClick = { selectedItem.value = item })
+
+                    }
+                }
+
+
+            }
+        },
+        gesturesEnabled = true
+    ) {
+
+
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    modifier = Modifier,
+                    colors = TopAppBarDefaults.topAppBarColors(Color.LightGray),
+                    title = {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = "Profile",
+                            textAlign = TextAlign.Center
+                        )
+                    },
+                    actions = {
+                        IconButton(onClick = {
+                            scope.launch {
+                                drawerState.apply {
+                                    if (isClosed) open() else close()
+                                }
+                            }
+                        }) {
+                            Icon(
+                                imageVector = Icons.Filled.Menu, contentDescription = ""
+                            )
+                        }
+                    }
+                )
+            }
+        ) { paddingValues ->
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp).padding(paddingValues),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                val gradientColors = listOf(Cyan, Blue.copy(alpha = 0.5f), Red.copy(alpha = 0.5f))
+                val offset = Offset(5f, 5f)
+
+                Text(
+                    text = buildAnnotatedString {
+                        append("Profile")
+                        withStyle(style = SpanStyle(brush = Brush.linearGradient(colors = gradientColors))) {}
+                        append("Screen")
+                    },
+                    color = Color.LightGray,
+                    style = TextStyle(
+                        brush = Brush.linearGradient(colors = gradientColors),
+                        shadow = Shadow(
+                            offset = offset,
+                            blurRadius = 3f
+                        )
+                    ),
+                )
+                Spacer(modifier = Modifier.size(10.dp))
+                CircleImage(imageId = R.drawable.images, size = DpSize(100.dp, 100.dp))
+                Spacer(modifier = Modifier.size(10.dp))
+                Text(text = "Place name", color = Color.Black)
+            }
+
         }
-    ) { paddingValues ->
-
-        ExtendedFab(modifier = Modifier.padding(paddingValues))
-
     }
-}
 
 @Composable
 fun ExtendedFab(modifier: Modifier=Modifier) {
@@ -183,7 +221,7 @@ fun ExtendedFab(modifier: Modifier=Modifier) {
             Spacer(modifier = Modifier.size(10.dp))
             Text(text = "Place name", color = Color.Black)
         }
-    })
+    })}
 
 //    Column {
 //        NavigationRail(
@@ -220,7 +258,7 @@ fun ExtendedFab(modifier: Modifier=Modifier) {
 
 @Preview
 @Composable
-private fun ProfileScreenPreview() {
+ fun ProfileScreenPreview() {
     LocationPickerTheme {
         ProfileScreen()
     }
