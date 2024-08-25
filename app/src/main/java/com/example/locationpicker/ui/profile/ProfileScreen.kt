@@ -28,8 +28,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.NavigationRail
-import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.PermanentDrawerSheet
 import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -37,11 +35,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -59,7 +55,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import androidx.room.util.TableInfo
 import androidx.wear.compose.material.Text
 import com.example.locationPicker.R
 import com.example.locationpicker.ui.locationlist.components.CircleImage
@@ -71,19 +66,27 @@ import kotlinx.coroutines.launch
 fun ProfileScreen() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val items = listOf(Icons.Default.Home,Icons.Filled.Search, Icons.Filled.Settings)
+    val items = listOf(Icons.Default.Home, Icons.Filled.Search, Icons.Filled.Settings)
     val selectedItem = remember { mutableStateOf(items[0]) }
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(modifier = Modifier) {
 
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    androidx.compose.material3.Text(
-                        text = "Drawer Title",
-                        modifier = Modifier.padding(8.dp),
-                        textAlign = TextAlign.Center
-                    )
+                Row(modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center) {
+                    ExtendedFloatingActionButton(
+                        onClick = { /*TODO*/ },
+                        shape = RoundedCornerShape(8.dp),
+                        containerColor = Blue,
+                        contentColor = Color.White,
+                        modifier = Modifier,
+                        content = {
+                            Icon(imageVector = Icons.Default.Edit, contentDescription = "")
+                            Spacer(modifier = Modifier.size(8.dp))
+                            Text(text = "Compose")
+                        })
+
                 }
 
                 HorizontalDivider()
@@ -138,7 +141,8 @@ fun ProfileScreen() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(8.dp).padding(paddingValues),
+                    .padding(8.dp)
+                    .padding(paddingValues),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -169,59 +173,62 @@ fun ProfileScreen() {
         }
     }
 
-@Composable
-fun ExtendedFab(modifier: Modifier=Modifier) {
+    @Composable
+    fun ExtendedFab(modifier: Modifier = Modifier) {
 
-    val items = listOf(Icons.Default.Home, Icons.Filled.Search, Icons.Filled.Settings)
-    //val icons = listOf(Icons.Default.Home,Icons.Filled.Search, Icons.Filled.Settings)
-    val selectedItem = remember { mutableStateOf(items[0]) }
-    PermanentNavigationDrawer(drawerContent = {
-        PermanentDrawerSheet(modifier = modifier.width(24.dp)) {
-            Column(Modifier.verticalScroll(rememberScrollState())) {
-                Spacer(Modifier.height(12.dp))
-                items.forEach { item ->
-                    NavigationDrawerItem(
-                        modifier = Modifier.padding(horizontal = 12.dp),
-                        icon = { Icon(item, contentDescription = null) },
-                        label = { Text(item.name.substringAfterLast(".")) },
-                        selected = item == selectedItem.value,
-                        onClick = { selectedItem.value = item })
+        val items = listOf(Icons.Default.Home, Icons.Filled.Search, Icons.Filled.Settings)
+        //val icons = listOf(Icons.Default.Home,Icons.Filled.Search, Icons.Filled.Settings)
+        val selectedItem = remember { mutableStateOf(items[0]) }
+        PermanentNavigationDrawer(drawerContent = {
+            PermanentDrawerSheet(modifier = modifier.width(24.dp)) {
 
+                Column(Modifier.verticalScroll(rememberScrollState())) {
+
+                    Spacer(Modifier.height(12.dp))
+                    items.forEach { item ->
+                        NavigationDrawerItem(
+                            modifier = Modifier.padding(horizontal = 12.dp),
+                            icon = { Icon(item, contentDescription = null) },
+                            label = { Text(item.name.substringAfterLast(".")) },
+                            selected = item == selectedItem.value,
+                            onClick = { selectedItem.value = item })
+
+                    }
                 }
             }
-        }
-    }, content = {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            val gradientColors = listOf(Cyan, Blue.copy(alpha = 0.5f), Red.copy(alpha = 0.5f))
-            val offset = Offset(5f, 5f)
+        }, content = {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                val gradientColors = listOf(Cyan, Blue.copy(alpha = 0.5f), Red.copy(alpha = 0.5f))
+                val offset = Offset(5f, 5f)
 
-            Text(
-                text = buildAnnotatedString {
-                    append("Profile")
-                    withStyle(style = SpanStyle(brush = Brush.linearGradient(colors = gradientColors))) {}
-                    append("Screen")
-                },
-                color = Color.LightGray,
-                style = TextStyle(
-                    brush = Brush.linearGradient(colors = gradientColors),
-                    shadow = Shadow(
-                        offset = offset,
-                        blurRadius = 3f
-                    )
-                ),
-            )
-            Spacer(modifier = Modifier.size(10.dp))
-            CircleImage(imageId = R.drawable.images, size = DpSize(100.dp, 100.dp))
-            Spacer(modifier = Modifier.size(10.dp))
-            Text(text = "Place name", color = Color.Black)
-        }
-    })}
+                Text(
+                    text = buildAnnotatedString {
+                        append("Profile")
+                        withStyle(style = SpanStyle(brush = Brush.linearGradient(colors = gradientColors))) {}
+                        append("Screen")
+                    },
+                    color = Color.LightGray,
+                    style = TextStyle(
+                        brush = Brush.linearGradient(colors = gradientColors),
+                        shadow = Shadow(
+                            offset = offset,
+                            blurRadius = 3f
+                        )
+                    ),
+                )
+                Spacer(modifier = Modifier.size(10.dp))
+                CircleImage(imageId = R.drawable.images, size = DpSize(100.dp, 100.dp))
+                Spacer(modifier = Modifier.size(10.dp))
+                Text(text = "Place name", color = Color.Black)
+            }
+        })
+    }
 
 //    Column {
 //        NavigationRail(
@@ -241,24 +248,13 @@ fun ExtendedFab(modifier: Modifier=Modifier) {
 //            }
 //        }
 //
-//        ExtendedFloatingActionButton(
-//            onClick = { /*TODO*/ },
-//            shape = RoundedCornerShape(8.dp),
-//            containerColor = Blue,
-//            contentColor = Color.White,
-//            modifier = modifier,
-//            content = {
-//                Icon(imageVector = Icons.Default.Edit, contentDescription = "")
-//                Spacer(modifier = Modifier.size(8.dp))
-//                Text(text = "Compose")
-//            })
-//    }
+
 }
 
 
 @Preview
 @Composable
- fun ProfileScreenPreview() {
+fun ProfileScreenPreview() {
     LocationPickerTheme {
         ProfileScreen()
     }
